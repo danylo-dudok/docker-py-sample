@@ -1,0 +1,34 @@
+{
+  "path": "./dockerfiles",
+  "builds": ["limesurvey.Dockerfile"],
+  "networks": [{"name": "limesurvey_network" }],
+  "containers": [
+    {
+      "image_name": "mcr.microsoft.com/mssql/server",
+      "name": "limesurvey_sqlserver",
+      "detach": true,
+      "ports": {
+        "protocol": "tcp",
+        "expose": 1433,
+        "internal": 1433
+      },
+      "networks": "limesurvey_network",
+      "environments": [
+        "ACCEPT_EULA=Y",
+        "SA_PASSWORD=I.am.using.docker"
+      ]
+    },
+    {
+      "image_name": "limesurvey",
+      "name": "limesurvey",
+      "detach": true,
+      "ports": {
+        "protocol": "tcp",
+        "expose": 80,
+        "internal": 80
+      },
+      "networks": "limesurvey_network",
+      "environments": []
+    }
+  ]
+}

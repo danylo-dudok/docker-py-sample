@@ -1,0 +1,5 @@
+#!/bin/bash
+
+docker rm $(docker images | awk '{ if ($1 == "mcr.microsoft.com/mssql/server" || $1 == "php")  print $3 }') -f;
+docker rmi $(docker images | awk '{ if ($1 == "mcr.microsoft.com/mssql/server" || $1 == "php")  print $3 }') -f;
+docker network rm $(docker network ls | awk '{ if ($2 == "limesurvey_network") print $1 }') -f;
